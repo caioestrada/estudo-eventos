@@ -1,0 +1,94 @@
+# Use root/example as user/password credentials
+version: '3.1'
+services:
+
+  autsis-service:
+      image: "autsis-service"
+      build: 
+        context: .
+        dockerfile: AutsisService.Dockerfile
+        args:
+            - http_proxy=http://10.58.97.134:8080
+            - https_proxy=http://10.58.97.134:8080
+            - HTTP_PROXY=http://10.58.97.134:8080
+            - HTTPS_PROXY=http://10.58.97.134:8080
+      expose:
+          - "9998"
+      ports:
+          - "9998:9998"
+      links:
+          - mongo-autsis
+          - rabbitmq
+      depends_on:
+          - mongo-autsis
+          - rabbitmq
+      environment: 
+          MONGOCONNECTION: "mongodb://mongo-autsis:27017"
+          DATABASENAME: "Autsis"
+          ASPNETCORE_ENVIRONMENT: "Development"
+          ASPNETCORE_URLS: http://+:9998
+          RABBITCONNECTION: host=rabbitmq;timeout=90
+
+  mongo-autsis:
+      image: 'bitnami/mongodb:latest'
+      expose: 
+        - '27017'
+
+  orbcore-service:
+      image: "orbcore-service"
+      build: 
+        context: .
+        dockerfile: OrbcoreService.Dockerfile
+        args:
+            - http_proxy=http://10.58.97.134:8080
+            - https_proxy=http://10.58.97.134:8080
+            - HTTP_PROXY=http://10.58.97.134:8080
+            - HTTPS_PROXY=http://10.58.97.134:8080
+      expose:
+          - "9999"
+      ports:
+          - "9999:9999"
+      links:
+          - mongo-orbcore
+          - rabbitmq
+      depends_on:
+          - mongo-orbcore
+      environment: 
+          MONGOCONNECTION: "mongodb://mongo-orbcore:27017"
+          DATABASENAME: "Orbcore"
+          ASPNETCORE_ENVIRONMENT: "Development"
+          ASPNETCORE_URLS: http://+:9999
+          RABBITCONNECTION: host=rabbitmq;timeout=90
+
+  mongo-orbcore:
+      image: 'bitnami/mongodb:latest'
+      expose: 
+        - '27017'
+
+  email-service:
+      image: "email-service"
+      build: 
+        context: .
+        dockerfile: EmailService.Dockerfile
+        args:
+            - http_proxy=http://10.58.97.134:8080
+            - https_proxy=http://10.58.97.134:8080
+            - HTTP_PROXY=http://10.58.97.134:8080
+            - HTTPS_PROXY=http://10.58.97.134:8080
+      expose:
+          - "9997"
+      ports:
+          - "9997:9997"
+      links:
+          - rabbitmq
+      environment: 
+          ASPNETCORE_ENVIRONMENT: "Development"
+          ASPNETCORE_URLS: http://+:9997
+          RABBITCONNECTION: host=rabbitmq;timeout=90
+
+  rabbitmq:
+      image: rabbitmq:3-management
+      expose:
+        - "5672"
+      ports:
+        - "8080:15672"

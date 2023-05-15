@@ -1,0 +1,13 @@
+<h3>AutSis</h3>
+
+<div class="animated bounceInUp full">
+  <h5>Sistemas / Funcionalidades</h5>
+  <mat-list>
+    <mat-list-item *ngFor="let autsis of autsisItens">
+      <mat-icon mat-list-icon class="ico">verified_user</mat-icon>
+      <h2 mat-line class="sist"> {{autsis.sistema}}</h2>
+      <h5 mat-line class="func"> {{autsis.funcionalidades}}</h5>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>

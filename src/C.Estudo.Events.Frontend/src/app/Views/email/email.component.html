@@ -1,0 +1,12 @@
+<h3>Email</h3>
+
+<div class="animated bounceInUp full">
+  <h5>Emails Enviados</h5>
+  <mat-list>
+    <mat-list-item *ngFor="let email of emailItens">
+      <mat-icon mat-list-icon class="ico">email</mat-icon>
+      <h3 mat-line class="end">{{ email.responsavel }}</h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>

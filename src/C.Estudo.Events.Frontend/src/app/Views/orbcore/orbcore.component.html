@@ -1,0 +1,33 @@
+<h3>OrbCore</h3>
+
+<mat-grid-list cols="2" rowHeight="10:8">
+  <mat-grid-tile>
+    <div class="animated bounceInUp full">
+      <h5>Objeto / Métodos / Reponsavel</h5>
+      <mat-list>
+        <mat-list-item *ngFor="let orb of orbcoreItens">
+          <mat-icon mat-list-icon class="ico">apps</mat-icon>
+          <h1 mat-line class="objeto">{{orb.objeto}}</h1>
+          <h5 mat-line class="metodos">{{orb.metodos}}</h5>
+          <h3 mat-line class="responsavel">{{orb.responsavel}}</h3>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="animated bounceInDown full">
+      <h5>Cadastrar</h5>
+      <mat-form-field class="full">
+        <input matInput placeholder="Objeto" [(ngModel)]="orbcoreAdicionar.objeto" />
+      </mat-form-field>
+      <mat-form-field class="full">
+        <input matInput placeholder="E-mail Responsavel" [(ngModel)]="orbcoreAdicionar.responsavel" />
+      </mat-form-field>
+      <mat-form-field class="full">
+        <input matInput placeholder="Metodos" [(ngModel)]="orbcoreAdicionar.metodosView"/>
+      </mat-form-field>
+      <button mat-flat-button color="warn" (click)="adicionarObjeto()">Adicionar</button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
